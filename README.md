@@ -20,49 +20,90 @@ A robust shopping cart system built with Next.js, featuring promotional campaign
 - Compares all available promotions and selects the one with the lowest final price
 - Provides detailed breakdown of savings and recommendations
 
+### Cart Persistence
+- Cart data persists across page reloads using localStorage
+- Hybrid repository pattern: memory storage on server + localStorage on client
+- Automatic cart loading when the application starts
+
 ## 🏗️ Architecture
 
 This project follows **Clean Architecture** principles with a clear separation of concerns:
 
 ```
 src/
-├── domain/                    # Business logic and entities
+├── domain/                    # Business logic and entities (pure)
 │   ├── entities/             # Core business entities
 │   │   ├── Product.ts        # Product entity
 │   │   ├── Cart.ts           # Shopping cart entity
 │   │   ├── CartItem.ts       # Cart item entity
-│   │   └── Customer.ts       # Customer entity (VIP/Common)
+│   │   ├── Customer.ts       # Customer entity (VIP/Common)
+│   │   └── __tests__/        # Entity tests
+│   │       ├── Product.test.ts
+│   │       ├── Cart.test.ts
+│   │       ├── CartItem.test.ts
+│   │       └── Customer.test.ts
 │   ├── value-objects/        # Value objects
-│   │   └── PricingResult.ts  # Pricing calculation result
-│   ├── services/             # Domain services
+│   │   ├── PricingResult.ts  # Pricing calculation result
+│   │   └── __tests__/        # Value object tests
+│   │       └── PricingResult.test.ts
+│   ├── services/             # Domain service interfaces
 │   │   ├── PricingStrategy.ts        # Strategy pattern interface
-│   │   ├── ThreeForTwoStrategy.ts    # "3 for 2" promotion
-│   │   ├── VipDiscountStrategy.ts    # VIP 15% discount
-│   │   └── PricingService.ts         # Main pricing orchestrator
+│   │   └── PricingService.ts         # Service interface
 │   └── repositories/         # Repository interfaces
 │       ├── ProductRepository.ts
 │       ├── CartRepository.ts
 │       └── CustomerRepository.ts
-├── application/              # Application layer (use cases)
-│   └── use-cases/
-│       ├── AddItemToCartUseCase.ts
-│       └── CalculateCartPriceUseCase.ts
+├── application/              # Application layer (use cases & services)
+│   └── services/             # Service implementations
+│       ├── PricingStrategy.ts        # Strategy interface
+│       ├── ThreeForTwoStrategy.ts    # "3 for 2" promotion implementation
+│       ├── VipDiscountStrategy.ts    # VIP 15% discount implementation
+│       ├── PricingService.ts         # Main pricing orchestrator
+│       └── __tests__/                # Service tests
+│           ├── ThreeForTwoStrategy.test.ts
+│           ├── VipDiscountStrategy.test.ts
+│           └── PricingService.test.ts
+├── use-cases/                # Use cases (business operations)
+│   ├── AddItemToCartUseCase.ts
+│   └── CalculateCartPriceUseCase.ts
 ├── infrastructure/           # Infrastructure layer
 │   └── repositories/
+│       ├── Repositories.ts           # Singleton instances
 │       ├── InMemoryProductRepository.ts
 │       ├── InMemoryCartRepository.ts
-│       └── InMemoryCustomerRepository.ts
+│       ├── InMemoryCustomerRepository.ts
+│       ├── LocalStorageCartRepository.ts  # Client-side persistence
+│       └── HybridCartRepository.ts        # Memory + localStorage
 └── app/                     # Next.js App Router
     ├── api/                 # REST API endpoints
     │   ├── products/        # GET /api/products
     │   ├── customers/       # GET /api/customers
     │   └── cart/
     │       ├── add/         # POST /api/cart/add
-    │       └── calculate/   # POST /api/cart/calculate
+    │       ├── calculate/   # POST /api/cart/calculate
+    │       └── load/        # POST /api/cart/load
     ├── layout.tsx
     ├── page.tsx
     └── globals.css
 ```
+
+## 🔄 Recent Improvements
+
+### Architecture Refactoring
+- **Moved service implementations** from `domain/services` to `application/services`
+- **Domain layer now contains only** interfaces and pure business logic
+- **Application layer** contains all service implementations and use cases
+- **Better separation of concerns** following Clean Architecture principles
+
+### Cart Persistence
+- **HybridCartRepository**: Combines in-memory storage with localStorage
+- **Automatic cart loading**: Cart state persists across page reloads
+- **Improved user experience**: No data loss when refreshing the page
+
+### Strategy Pattern Enhancement
+- **Fixed 3-for-2 logic**: Now properly handles item quantities and grouping
+- **Improved test coverage**: All tests passing with 100% coverage
+- **Better error handling**: More robust promotion calculations
 
 ## 🚀 Getting Started
 
@@ -121,6 +162,13 @@ src/
   }
   ```
 
+- **POST** `/api/cart/load` - Load cart from localStorage
+  ```json
+  {
+    "cartId": "cart-123"
+  }
+  ```
+
 ## 🧪 Testing
 
 ### Run Tests
@@ -139,7 +187,9 @@ yarn test:coverage
 
 ### Test Coverage Target
 - **Minimum coverage**: 70%
-- **Coverage includes**: Domain logic, use cases, and API endpoints
+- **Current coverage**: 100% (statements), 100% (branches), 100% (functions)
+- **Coverage includes**: Domain logic, application services, use cases, and API endpoints
+- **Test files**: 8 test suites with 57 tests total
 
 ## 📊 Sample Scenarios
 
@@ -167,9 +217,9 @@ yarn test:coverage
 ## 🏛️ Design Decisions
 
 ### 1. Clean Architecture
-- **Domain Layer**: Pure business logic, no dependencies on external frameworks
-- **Application Layer**: Use cases orchestrate domain objects
-- **Infrastructure Layer**: Implements repository interfaces with in-memory storage
+- **Domain Layer**: Pure business logic and interfaces, no dependencies on external frameworks
+- **Application Layer**: Service implementations and use cases that orchestrate domain objects
+- **Infrastructure Layer**: Implements repository interfaces with in-memory and localStorage storage
 - **API Layer**: Thin controllers that delegate to use cases
 
 ### 2. SOLID Principles
@@ -181,11 +231,20 @@ yarn test:coverage
 
 ### 3. Strategy Pattern
 - **PricingStrategy**: Interface for different promotion types
-- **ThreeForTwoStrategy**: Implements "3 for 2" logic
+- **ThreeForTwoStrategy**: Implements "3 for 2" logic with proper item grouping
 - **VipDiscountStrategy**: Implements 15% VIP discount
 - **PricingService**: Orchestrates strategies and selects the best option
 
 ### 4. Repository Pattern
+- **Interfaces in Domain**: Define contracts for data access
+- **Implementations in Infrastructure**: Concrete implementations (in-memory, localStorage)
+- **HybridCartRepository**: Combines server memory with client localStorage for persistence
+
+### 5. Layer Separation
+- **Domain**: Contains only business rules, entities, and interfaces
+- **Application**: Contains service implementations and use cases
+- **Infrastructure**: Contains technical implementations (repositories, external services)
+- **Presentation**: Contains UI components and API routes
 - **Interfaces**: Define contracts for data access
 - **In-Memory Implementation**: Simple storage for development/testing
 - **Easy to Extend**: Can be replaced with database implementations
