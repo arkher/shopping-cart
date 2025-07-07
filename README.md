@@ -25,6 +25,11 @@ A robust shopping cart system built with Next.js, featuring promotional campaign
 - Hybrid repository pattern: memory storage on server + localStorage on client
 - Automatic cart loading when the application starts
 
+### Responsive Design
+- Fully responsive interface that works on desktop, tablet, and mobile devices
+- Grid layout adapts from 2 columns on desktop to 1 column on mobile
+- Touch-friendly buttons and interactive elements
+
 ## 🏗️ Architecture
 
 This project follows **Clean Architecture** principles with a clear separation of concerns:
@@ -257,6 +262,7 @@ yarn test:coverage
 - **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript
 - **Testing**: Jest + Testing Library
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS (Responsive Design)
 - **Architecture**: Clean Architecture
 - **Patterns**: Strategy, Repository, Value Objects
+- **UI/UX**: Responsive design with mobile-first approach
