@@ -82,6 +82,12 @@ src/
     │       ├── add/         # POST /api/cart/add
     │       ├── calculate/   # POST /api/cart/calculate
     │       └── load/        # POST /api/cart/load
+    ├── components/          # UI Components
+    │   ├── CartSection.tsx          # Shopping cart display
+    │   ├── CustomerSelectionSection.tsx  # Customer type selection
+    │   ├── PricingResultSection.tsx      # Price calculation results
+    │   ├── ProductsSection.tsx           # Product listing
+    │   └── index.ts                    # Component exports
     ├── layout.tsx
     ├── page.tsx
     └── globals.css
