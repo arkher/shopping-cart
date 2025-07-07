@@ -21,3 +21,12 @@ export interface CartContextType {
   getTotalItems: () => number;
   getTotalPrice: () => number;
 } 
+
+export interface PricingResult {
+  originalPrice: number;
+  finalPrice: number;
+  discount: number;
+  promotionType: string;
+  description: string;
+  savingsPercentage: number;
+}
