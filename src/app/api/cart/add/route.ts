@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { AddItemToCartUseCase } from '@/use-cases/AddItemToCartUseCase';
+import { AddItemToCartUseCase } from '@/application/use-cases/AddItemToCartUseCase';
 import { cartRepository, productRepository } from '@/infrastructure/repositories/Repositories';
 import { CartItemEntity } from '@/domain/entities/CartItem';
 

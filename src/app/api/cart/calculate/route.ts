@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { CalculateCartPriceUseCase } from '@/use-cases/CalculateCartPriceUseCase';
+import { CalculateCartPriceUseCase } from '@/application/use-cases/CalculateCartPriceUseCase';
 import { cartRepository, customerRepository } from '@/infrastructure/repositories/Repositories';
 import { PricingService } from '@/application/services/PricingService';
 import { PricingResultEntity } from '@/domain/value-objects/PricingResult';

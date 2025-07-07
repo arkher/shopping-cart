@@ -54,18 +54,18 @@ src/
 │       ├── CartRepository.ts
 │       └── CustomerRepository.ts
 ├── application/              # Application layer (use cases & services)
-│   └── services/             # Service implementations
-│       ├── PricingStrategy.ts        # Strategy interface
-│       ├── ThreeForTwoStrategy.ts    # "3 for 2" promotion implementation
-│       ├── VipDiscountStrategy.ts    # VIP 15% discount implementation
-│       ├── PricingService.ts         # Main pricing orchestrator
-│       └── __tests__/                # Service tests
-│           ├── ThreeForTwoStrategy.test.ts
-│           ├── VipDiscountStrategy.test.ts
-│           └── PricingService.test.ts
-├── use-cases/                # Use cases (business operations)
-│   ├── AddItemToCartUseCase.ts
-│   └── CalculateCartPriceUseCase.ts
+│   ├── services/             # Service implementations
+│   │   ├── PricingStrategy.ts        # Strategy interface
+│   │   ├── ThreeForTwoStrategy.ts    # "3 for 2" promotion implementation
+│   │   ├── VipDiscountStrategy.ts    # VIP 15% discount implementation
+│   │   ├── PricingService.ts         # Main pricing orchestrator
+│   │   └── __tests__/                # Service tests
+│   │       ├── ThreeForTwoStrategy.test.ts
+│   │       ├── VipDiscountStrategy.test.ts
+│   │       └── PricingService.test.ts
+│   └── use-cases/            # Use cases (business operations)
+│       ├── AddItemToCartUseCase.ts
+│       └── CalculateCartPriceUseCase.ts
 ├── infrastructure/           # Infrastructure layer
 │   └── repositories/
 │       ├── Repositories.ts           # Singleton instances
