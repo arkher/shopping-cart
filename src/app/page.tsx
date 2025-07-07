@@ -170,6 +170,38 @@ export default function Home() {
     );
   };
 
+  const removeFromCart = async (productId: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch("/api/cart/remove", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          cartId,
+          productId,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setCartItems(result.items);
+        setPricingResult(null);
+        if (selectedCustomer && result.items.length > 0) {
+          await calculatePricing();
+        }
+      } else {
+        console.error("Error removing item from cart:", result.error);
+        alert("Error removing item from cart: " + result.error);
+      }
+    } catch (error) {
+      console.error("Error removing from cart:", error);
+      alert("Error removing item from cart");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const clearCart = () => {
     setCartItems([]);
     setPricingResult(null);
@@ -208,6 +240,7 @@ export default function Home() {
             getTotalPrice={getTotalPrice}
             selectedCustomer={selectedCustomer}
             calculatePricing={calculatePricing}
+            removeFromCart={removeFromCart}
             clearCart={clearCart}
             loading={loading}
           />

@@ -65,6 +65,7 @@ src/
 │   │       └── PricingService.test.ts
 │   └── use-cases/            # Use cases (business operations)
 │       ├── AddItemToCartUseCase.ts
+│       ├── RemoveItemFromCartUseCase.ts
 │       └── CalculateCartPriceUseCase.ts
 ├── infrastructure/           # Infrastructure layer
 │   └── repositories/
@@ -80,6 +81,7 @@ src/
     │   ├── customers/       # GET /api/customers
     │   └── cart/
     │       ├── add/         # POST /api/cart/add
+    │       ├── remove/      # POST /api/cart/remove
     │       ├── calculate/   # POST /api/cart/calculate
     │       └── load/        # POST /api/cart/load
     ├── components/          # UI Components
@@ -139,6 +141,14 @@ src/
     "cartId": "cart-123",
     "productId": "tshirt",
     "quantity": 2
+  }
+  ```
+
+- **POST** `/api/cart/remove` - Remove item from cart
+  ```json
+  {
+    "cartId": "cart-123",
+    "productId": "tshirt"
   }
   ```
 
