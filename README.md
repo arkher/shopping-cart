@@ -87,24 +87,6 @@ src/
     └── globals.css
 ```
 
-## 🔄 Recent Improvements
-
-### Architecture Refactoring
-- **Moved service implementations** from `domain/services` to `application/services`
-- **Domain layer now contains only** interfaces and pure business logic
-- **Application layer** contains all service implementations and use cases
-- **Better separation of concerns** following Clean Architecture principles
-
-### Cart Persistence
-- **HybridCartRepository**: Combines in-memory storage with localStorage
-- **Automatic cart loading**: Cart state persists across page reloads
-- **Improved user experience**: No data loss when refreshing the page
-
-### Strategy Pattern Enhancement
-- **Fixed 3-for-2 logic**: Now properly handles item quantities and grouping
-- **Improved test coverage**: All tests passing with 100% coverage
-- **Better error handling**: More robust promotion calculations
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -187,7 +169,7 @@ yarn test:coverage
 
 ### Test Coverage Target
 - **Minimum coverage**: 70%
-- **Current coverage**: 100% (statements), 100% (branches), 100% (functions)
+- **Current coverage**: 86% (statements), 72% (branches), 90% (functions)
 - **Coverage includes**: Domain logic, application services, use cases, and API endpoints
 - **Test files**: 8 test suites with 57 tests total
 
@@ -262,24 +244,3 @@ yarn test:coverage
 - **Styling**: Tailwind CSS
 - **Architecture**: Clean Architecture
 - **Patterns**: Strategy, Repository, Value Objects
-
-## 📈 Future Enhancements
-
-1. **Database Integration**: Replace in-memory repositories with PostgreSQL/MongoDB
-2. **Authentication**: Add user authentication and session management
-3. **More Promotions**: Implement additional promotional strategies
-4. **Inventory Management**: Add stock tracking and availability
-5. **Order Processing**: Complete checkout flow and order management
-6. **Analytics**: Track promotion effectiveness and customer behavior
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
