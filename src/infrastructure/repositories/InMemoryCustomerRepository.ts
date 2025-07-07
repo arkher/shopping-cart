@@ -5,8 +5,8 @@ export class InMemoryCustomerRepository implements CustomerRepository {
   private customers: Map<string, Customer> = new Map();
 
   constructor() {
-    this.customers.set('customer-1', CustomerEntity.createCommon('customer-1', 'John Doe'));
-    this.customers.set('vip-1', CustomerEntity.createVIP('vip-1', 'Jane Smith'));
+    this.customers.set('customer-1', CustomerEntity.createCommon('customer-1', 'Paulo Gomes'));
+    this.customers.set('vip-1', CustomerEntity.createVIP('vip-1', 'Larissa Costa'));
   }
 
   async findAll(): Promise<CustomerEntity[]> {
